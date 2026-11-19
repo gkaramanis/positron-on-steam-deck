@@ -1,0 +1,144 @@
+<!doctype html>
+<!--
+  Steam library art for the Positron shortcut. render.sh opens this page once
+  per asset (?a=portrait|landscape|hero|logo) in headless Chrome.
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face {
+    font-family: "Familjen";
+    src: url("file:///Users/georgios/Library/Fonts/FamiljenGrotesk-SemiBold.otf");
+    font-weight: 600;
+  }
+  @font-face {
+    font-family: "Familjen";
+    src: url("file:///Users/georgios/Library/Fonts/FamiljenGrotesk-Regular.otf");
+    font-weight: 400;
+  }
+  :root {
+    --bg: #0e1319;
+    --panel: #121921;
+    --grid: #1d2732;
+    --point: #5a86b0;
+    --line: #8cc4ff;
+    --ribbon: rgba(58, 120, 177, 0.28);
+    --blue: #3a78b1;
+  }
+  html, body { margin: 0; padding: 0; overflow: hidden; }
+  body { background: var(--bg); font-family: "Familjen", sans-serif; color: #fff; }
+  body.logo { background: transparent; }
+  .stage { position: relative; overflow: hidden; }
+  svg.plot { position: absolute; inset: 0; }
+  .mark { position: absolute; }
+  .word { position: absolute; font-weight: 600; letter-spacing: -0.02em; line-height: 1; }
+  .tag { position: absolute; font-weight: 400; color: #9fb4c8; letter-spacing: 0.02em; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script>
+const P_MARK = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 440"><rect x="12" y="12" width="416" height="416" rx="103" fill="#3a78b1"/><path d="M83.6 373.6V195c0-63 52.4-143.7 142.7-143.7S370.4 121 370.4 192.4c0 122.6-116.6 143.1-116.6 143.1S261 324 261 306s-8-28-8-28 60-16 60-87-53-83-86-83c-57 0-88.3 48.5-88.3 84.3v181.9c0 25.9-17.5 23.9-17.5 23.9H102s-18.4 0-18.4-24.4Z" fill="#fff"/><circle cx="204.9" cy="306.6" r="48" fill="#fff"/></svg>`;
+
+const sizes = {
+  portrait: [600, 900],
+  landscape: [920, 430],
+  hero: [1920, 620],
+  logo: [1280, 400],
+};
+
+const asset = new URLSearchParams(location.search).get("a") || "hero";
+const [W, H] = sizes[asset];
+const stage = document.getElementById("stage");
+stage.style.width = W + "px";
+stage.style.height = H + "px";
+if (asset === "logo") document.body.className = "logo";
+
+// Seeded RNG so every render draws the same points.
+let seed = 20261114;
+const rand = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
+const gauss = () => Math.sqrt(-2 * Math.log(rand() + 1e-9)) * Math.cos(2 * Math.PI * rand());
+
+// The smooth trend: a damped rise with a late lift, in unit coordinates.
+const trend = (t) => 0.18 + 0.55 * (1 - Math.exp(-3.2 * t)) + 0.22 * t * t
+  - 0.09 * Math.sin(t * 7.5) * Math.exp(-1.5 * t);
+
+function plot({ x0, y0, x1, y1, n, r, gridStep, lineW, ribbon, fade }) {
+  const sx = (t) => x0 + t * (x1 - x0);
+  const sy = (v) => y1 - v * (y1 - y0);
+  let s = `<svg class="plot" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+  s += `<defs><linearGradient id="fade" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stop-color="#000" stop-opacity="${fade[0]}"/>
+          <stop offset="1" stop-color="#000" stop-opacity="${fade[1]}"/>
+        </linearGradient>
+        <filter id="glow" x="-10%" y="-50%" width="120%" height="200%">
+          <feGaussianBlur stdDeviation="${lineW * 1.6}" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter></defs>`;
+  s += `<rect width="${W}" height="${H}" fill="var(--panel)"/>`;
+  for (let x = x0 % gridStep; x < W; x += gridStep)
+    s += `<line x1="${x}" x2="${x}" y1="0" y2="${H}" stroke="var(--grid)" stroke-width="1.5"/>`;
+  for (let y = y0 % gridStep; y < H; y += gridStep)
+    s += `<line x1="0" x2="${W}" y1="${y}" y2="${y}" stroke="var(--grid)" stroke-width="1.5"/>`;
+
+  for (let i = 0; i < n; i++) {
+    const t = rand();
+    const v = trend(t) + gauss() * 0.075;
+    s += `<circle cx="${sx(t).toFixed(1)}" cy="${sy(v).toFixed(1)}" r="${r}" fill="var(--point)" fill-opacity="0.55"/>`;
+  }
+
+  const steps = 160;
+  let up = [], lo = [], mid = [];
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    const se = ribbon * (0.6 + 1.4 * Math.pow(Math.abs(t - 0.45) * 2, 2));
+    up.push(`${sx(t).toFixed(1)},${sy(trend(t) + se).toFixed(1)}`);
+    lo.push(`${sx(t).toFixed(1)},${sy(trend(t) - se).toFixed(1)}`);
+    mid.push(`${sx(t).toFixed(1)},${sy(trend(t)).toFixed(1)}`);
+  }
+  s += `<polygon points="${up.join(" ")} ${lo.reverse().join(" ")}" fill="var(--ribbon)"/>`;
+  s += `<polyline points="${mid.join(" ")}" fill="none" stroke="var(--line)" stroke-width="${lineW}"
+          stroke-linecap="round" filter="url(#glow)"/>`;
+  s += `<rect width="${W}" height="${H}" fill="url(#fade)"/>`;
+  return s + `</svg>`;
+}
+
+function mark(x, y, size) {
+  return `<div class="mark" style="left:${x}px;top:${y}px;width:${size}px;height:${size}px">${P_MARK}</div>`;
+}
+function word(x, y, size, text = "Positron") {
+  return `<div class="word" style="left:${x}px;top:${y}px;font-size:${size}px">${text}</div>`;
+}
+function tag(x, y, size, text) {
+  return `<div class="tag" style="left:${x}px;top:${y}px;font-size:${size}px">${text}</div>`;
+}
+
+let html = "";
+if (asset === "hero") {
+  // Steam lays the logo over the lower left, so the plot carries the right side.
+  html = plot({ x0: 380, y0: 70, x1: 1980, y1: 600, n: 260, r: 5, gridStep: 80,
+                lineW: 5, ribbon: 0.05, fade: [0.85, 0] });
+} else if (asset === "landscape") {
+  html = plot({ x0: 300, y0: 40, x1: 960, y1: 420, n: 120, r: 3.5, gridStep: 46,
+                lineW: 3.5, ribbon: 0.05, fade: [0.8, 0.1] });
+  html += mark(52, 135, 104) + word(180, 150, 72) + tag(184, 236, 22, "R on Steam Deck");
+} else if (asset === "portrait") {
+  html = plot({ x0: -40, y0: 470, x1: 640, y1: 880, n: 130, r: 4, gridStep: 50,
+                lineW: 4, ribbon: 0.05, fade: [0.15, 0.15] });
+  html += `<div style="position:absolute;inset:0;background:linear-gradient(180deg,var(--bg) 0%,var(--bg) 42%,rgba(14,19,25,0) 62%)"></div>`;
+  html += mark(195, 110, 210) + word(0, 362, 92) + tag(0, 470, 26, "R on Steam Deck");
+} else if (asset === "logo") {
+  html = mark(40, 80, 240) + word(320, 112, 176);
+}
+stage.innerHTML = html;
+
+// Center the portrait text horizontally.
+if (asset === "portrait") {
+  for (const el of stage.querySelectorAll(".word, .tag")) {
+    el.style.left = ((W - el.offsetWidth) / 2) + "px";
+  }
+}
+</script>
+</body>
+</html>

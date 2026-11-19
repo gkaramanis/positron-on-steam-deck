@@ -1,0 +1,5 @@
+.DS_Store
+*.deb
+*.rpm
+steam/artwork/*.png
+devlog/
