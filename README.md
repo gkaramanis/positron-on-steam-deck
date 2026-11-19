@@ -3,6 +3,8 @@
 [Positron](https://positron.posit.co) with R on a Steam Deck, in Desktop Mode
 and Game Mode. Unofficial; not affiliated with Posit.
 
+![Positron running an R script with a ggplot2 scatter plot on a Steam Deck](img/positron-on-deck.jpg)
+
 - Official Linux x64 build, unpacked from Posit's `.deb` into `~`
 - R + tidyverse from conda-forge via micromamba
 - No root, no pacman; survives SteamOS updates
