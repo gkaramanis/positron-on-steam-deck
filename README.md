@@ -75,9 +75,9 @@ After install, in Steam:
 | Y | command palette |
 | L1 / R1 | previous / next tab |
 | X or Steam + X | keyboard |
-| left stick | R snippet wheel (aim, click) |
+| left stick | R snippet wheel (aim, click), untested |
 
-Snippet wheel: `<-` `==` `%in%` `|>` `~` `library()` `""` `mutate()`
+Snippet wheel (untested on the Deck): `<-` `==` `%in%` `|>` `~` `library()` `""` `mutate()`
 `summarise(.by)` `c()` `ggplot() + geom_()` `function() {}`. Tab jumps to the
 next gap.
 
