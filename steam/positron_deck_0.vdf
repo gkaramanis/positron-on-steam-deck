@@ -14,7 +14,7 @@
 		"english"
 		{
 			"Title" "Positron Deck"
-			"Description" "Web Browser mouse and scrolling, plus Positron shortcuts: A run line, Y command palette, L1/R1 tabs, back buttons editor/console/undo/source. Left stick: R snippet wheel (aim, click)."
+			"Description" "Web Browser mouse and scrolling, plus Positron shortcuts: A run line, Y command palette, L1/R1 tabs, back buttons editor/undo/source. Hold R5 for the R snippet wheel on the left stick (aim, release R5 to insert)."
 		}
 	}
 	
@@ -97,9 +97,9 @@
 						"bindings"
 						{
 							"binding"		"key_press LEFT_CONTROL, <-"
-							"binding"		"key_press LEFT_SHIFT"
-							"binding"		"key_press LEFT_ALT"
-							"binding"		"key_press A"
+							"binding"		"key_press LEFT_SHIFT, <-"
+							"binding"		"key_press LEFT_ALT, <-"
+							"binding"		"key_press A, <-"
 						}
 					}
 				}
@@ -113,9 +113,9 @@
 						"bindings"
 						{
 							"binding"		"key_press LEFT_CONTROL, =="
-							"binding"		"key_press LEFT_SHIFT"
-							"binding"		"key_press LEFT_ALT"
-							"binding"		"key_press B"
+							"binding"		"key_press LEFT_SHIFT, =="
+							"binding"		"key_press LEFT_ALT, =="
+							"binding"		"key_press B, =="
 						}
 					}
 				}
@@ -129,9 +129,9 @@
 						"bindings"
 						{
 							"binding"		"key_press LEFT_CONTROL, %in%"
-							"binding"		"key_press LEFT_SHIFT"
-							"binding"		"key_press LEFT_ALT"
-							"binding"		"key_press C"
+							"binding"		"key_press LEFT_SHIFT, %in%"
+							"binding"		"key_press LEFT_ALT, %in%"
+							"binding"		"key_press C, %in%"
 						}
 					}
 				}
@@ -145,9 +145,9 @@
 						"bindings"
 						{
 							"binding"		"key_press LEFT_CONTROL, |>"
-							"binding"		"key_press LEFT_SHIFT"
-							"binding"		"key_press LEFT_ALT"
-							"binding"		"key_press D"
+							"binding"		"key_press LEFT_SHIFT, |>"
+							"binding"		"key_press LEFT_ALT, |>"
+							"binding"		"key_press D, |>"
 						}
 					}
 				}
@@ -161,9 +161,9 @@
 						"bindings"
 						{
 							"binding"		"key_press LEFT_CONTROL, ~"
-							"binding"		"key_press LEFT_SHIFT"
-							"binding"		"key_press LEFT_ALT"
-							"binding"		"key_press E"
+							"binding"		"key_press LEFT_SHIFT, ~"
+							"binding"		"key_press LEFT_ALT, ~"
+							"binding"		"key_press E, ~"
 						}
 					}
 				}
@@ -177,9 +177,9 @@
 						"bindings"
 						{
 							"binding"		"key_press LEFT_CONTROL, library()"
-							"binding"		"key_press LEFT_SHIFT"
-							"binding"		"key_press LEFT_ALT"
-							"binding"		"key_press F"
+							"binding"		"key_press LEFT_SHIFT, library()"
+							"binding"		"key_press LEFT_ALT, library()"
+							"binding"		"key_press F, library()"
 						}
 					}
 				}
@@ -193,9 +193,9 @@
 						"bindings"
 						{
 							"binding"		"key_press LEFT_CONTROL, “ ”"
-							"binding"		"key_press LEFT_SHIFT"
-							"binding"		"key_press LEFT_ALT"
-							"binding"		"key_press G"
+							"binding"		"key_press LEFT_SHIFT, “ ”"
+							"binding"		"key_press LEFT_ALT, “ ”"
+							"binding"		"key_press G, “ ”"
 						}
 					}
 				}
@@ -209,9 +209,9 @@
 						"bindings"
 						{
 							"binding"		"key_press LEFT_CONTROL, mutate()"
-							"binding"		"key_press LEFT_SHIFT"
-							"binding"		"key_press LEFT_ALT"
-							"binding"		"key_press H"
+							"binding"		"key_press LEFT_SHIFT, mutate()"
+							"binding"		"key_press LEFT_ALT, mutate()"
+							"binding"		"key_press H, mutate()"
 						}
 					}
 				}
@@ -225,9 +225,9 @@
 						"bindings"
 						{
 							"binding"		"key_press LEFT_CONTROL, summarise()"
-							"binding"		"key_press LEFT_SHIFT"
-							"binding"		"key_press LEFT_ALT"
-							"binding"		"key_press I"
+							"binding"		"key_press LEFT_SHIFT, summarise()"
+							"binding"		"key_press LEFT_ALT, summarise()"
+							"binding"		"key_press I, summarise()"
 						}
 					}
 				}
@@ -241,9 +241,9 @@
 						"bindings"
 						{
 							"binding"		"key_press LEFT_CONTROL, c()"
-							"binding"		"key_press LEFT_SHIFT"
-							"binding"		"key_press LEFT_ALT"
-							"binding"		"key_press J"
+							"binding"		"key_press LEFT_SHIFT, c()"
+							"binding"		"key_press LEFT_ALT, c()"
+							"binding"		"key_press J, c()"
 						}
 					}
 				}
@@ -257,9 +257,9 @@
 						"bindings"
 						{
 							"binding"		"key_press LEFT_CONTROL, ggplot()"
-							"binding"		"key_press LEFT_SHIFT"
-							"binding"		"key_press LEFT_ALT"
-							"binding"		"key_press K"
+							"binding"		"key_press LEFT_SHIFT, ggplot()"
+							"binding"		"key_press LEFT_ALT, ggplot()"
+							"binding"		"key_press K, ggplot()"
 						}
 					}
 				}
@@ -273,9 +273,9 @@
 						"bindings"
 						{
 							"binding"		"key_press LEFT_CONTROL, function()"
-							"binding"		"key_press LEFT_SHIFT"
-							"binding"		"key_press LEFT_ALT"
-							"binding"		"key_press L"
+							"binding"		"key_press LEFT_SHIFT, function()"
+							"binding"		"key_press LEFT_ALT, function()"
+							"binding"		"key_press L, function()"
 						}
 					}
 				}
@@ -283,7 +283,7 @@
 		}
 		"settings"
 		{
-			"touchmenu_button_fire_type"		"0"
+			"touchmenu_button_fire_type"		"2"
 		}
 	}
 	"group"
@@ -730,8 +730,7 @@
 					{
 						"bindings"
 						{
-							"binding"		"key_press LEFT_CONTROL, Focus console"
-							"binding"		"key_press 2"
+							"binding"		"mode_shift joystick 1"
 						}
 					}
 				}
@@ -804,7 +803,7 @@
 		{
 			"6"		"switch active"
 			"0"		"button_diamond active"
-			"1"		"joystick active"
+			"1"		"joystick active modeshift"
 			"2"		"left_trackpad inactive"
 			"7"		"left_trackpad active"
 			"3"		"right_trackpad active"

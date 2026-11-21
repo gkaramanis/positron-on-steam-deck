@@ -381,7 +381,7 @@ p.write_text(json.dumps(s, indent=2) + "\n")
 print("positron.r.customBinaries:", binaries)
 EOF
 
-# The left-stick radial menu sends Ctrl+Shift+Alt+A..L; these bindings turn
+# The R5 snippet wheel sends Ctrl+Shift+Alt+A..L; these bindings turn
 # each chord into an R snippet. Entries on other keys are kept.
 step "Snippet keys"
 python3 -I - "$(dirname "$settings")/keybindings.json" "$here/snippet-keys.json" <<'EOF'
